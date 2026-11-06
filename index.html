@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1220">
+  <meta name="description" content="A visual guide to the Lark agent conversation flow: secure access, IELTS practice, everyday questions, and image summaries.">
+  <title>Thư ký Kim-KimochiYY · Lark Agent Workflow</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #e7eef9;
+      --muted: #a5b3c8;
+      --line: #34445b;
+      --paper: #0b1220;
+      --white: #172337;
+      --blue: #8c9bff;
+      --cyan: #56c8ed;
+      --green: #0caf83;
+      --red: #f0758a;
+      --gold: #f3b64b;
+      --shadow: 0 18px 50px rgba(0, 0, 0, .3);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: radial-gradient(ellipse at 12% 3%, rgba(89,112,245,.17), transparent 32rem),
+        radial-gradient(ellipse at 92% 24%, rgba(40,181,194,.12), transparent 28rem), var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    .wrap { width: min(1080px, calc(100% - 40px)); margin-inline: auto; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; padding:20px 0; }
+    .brand { display:flex; align-items:center; gap:11px; font-weight:800; letter-spacing:-.03em; }
+    .brand small { display:block; color:var(--muted); font-size:11px; font-weight:600; letter-spacing:.04em; }
+    .top-note { color:var(--muted); font-size:13px; }
+    .hero { padding:55px 0 38px; display:grid; grid-template-columns:1fr auto; gap:34px; align-items:end; }
+    .eyebrow { display:inline-flex; align-items:center; gap:8px; padding:7px 11px; border:1px solid #34445b; border-radius:999px; color:#bdc5ff; background:rgba(23,35,55,.9); font-size:12px; font-weight:750; }
+    .pulse { width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 0 4px #0caf831f; }
+    h1 { max-width:760px; margin:17px 0 14px; font-size:clamp(38px,6vw,64px); line-height:1.02; letter-spacing:-.055em; }
+    .gradient { color:transparent; background:linear-gradient(90deg,#9aa5ff,#6bd9ee); background-clip:text; }
+    .lead { max-width:680px; margin:0; color:var(--muted); font-size:17px; }
+    main { padding-bottom:70px; }
+    .workflow { padding:30px clamp(16px,4vw,46px) 38px; border:1px solid #2c3b52; border-radius:24px; background:rgba(18,28,45,.94); box-shadow:var(--shadow); }
+    .workflow-title { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:26px; }
+    .workflow-title h2 { margin:0; font-size:20px; letter-spacing:-.03em; }
+    .workflow-title span { color:var(--muted); font-size:12px; }
+    .chart { display:block; width:100%; height:auto; overflow:visible; }
+    .chart .edge { fill:none; stroke:#71819a; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; marker-end:url(#arrow); }
+    .chart .loop-edge { fill:none; stroke:#71819a; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; marker-end:url(#arrow); }
+    .chart .edge-label { fill:#b5c4da; font-size:14px; font-weight:750; }
+    .chart .box { fill:#1a273b; stroke:#354760; stroke-width:1.5; }
+    .chart .box-main { fill:#162b49; stroke:#50689e; }
+    .chart .box-leaf { fill:#142e2d; stroke:#33766d; }
+    .chart .box-image { fill:#302818; stroke:#85662e; }
+    .chart .box-start { fill:var(--green); stroke:var(--green); }
+    .chart .diamond { fill:#152b3a; stroke:#56b9df; stroke-width:1.7; }
+    .chart .txt { fill:var(--ink); font:600 16px Inter,ui-sans-serif,system-ui,sans-serif; text-anchor:middle; }
+    .chart .txt-small { fill:var(--muted); font:400 13px Inter,ui-sans-serif,system-ui,sans-serif; text-anchor:middle; }
+    .chart .txt-white { fill:#fff; font:750 16px Inter,ui-sans-serif,system-ui,sans-serif; text-anchor:middle; }
+    .chart .lane-title { fill:#5365e8; font:750 16px Inter,ui-sans-serif,system-ui,sans-serif; text-anchor:middle; }
+    .mobile-flow { display:none; }
+    .footer { padding:22px 0 28px; border-top:1px solid var(--line); color:var(--muted); text-align:center; font-size:12px; }
+    @media (max-width:760px) {
+      .hero { grid-template-columns:1fr; padding-top:38px; }
+      .chart { display:none; }
+      .mobile-flow { display:grid; width:100%; gap:12px; }
+      .mobile-path { padding:14px; border:1px solid var(--line); border-radius:14px; background:#172337; }
+      .mobile-path h3 { margin:0 0 8px; font-size:14px; }
+      .mobile-path p { margin:0; color:var(--muted); font-size:12px; }
+      .workflow-title { align-items:flex-start; flex-direction:column; gap:3px; }
+    }
+    .info-section { margin-top:22px; padding:28px clamp(16px,4vw,40px); border:1px solid #2c3b52; border-radius:20px; background:rgba(18,28,45,.94); }
+    .info-section h2 { margin:0 0 18px; color:#69c9f2; font-size:21px; letter-spacing:-.025em; }
+    .info-section > p { margin:0 0 14px; color:var(--muted); }
+    .tool-grid,.output-grid,.limits-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .info-tile { padding:16px; border-radius:12px; background:#1a2a40; }
+    .info-tile:nth-child(2) { background:#202b47; }
+    .info-tile:nth-child(3) { background:#19333a; }
+    .info-tile:nth-child(4) { background:#292f3b; }
+    .info-tile strong { display:block; margin-bottom:5px; color:var(--ink); font-size:14px; }
+    .info-tile p { margin:0; color:var(--muted); font-size:13px; }
+    .input-table { width:100%; border-collapse:collapse; }
+    .input-table th,.input-table td { padding:12px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    .input-table th { color:#b9c6da; font-size:13px; font-weight:700; }
+    .input-table td { color:var(--ink); font-size:13px; }
+    .action-list { margin:0; padding:0; list-style:none; counter-reset:steps; }
+    .action-list li { counter-increment:steps; display:grid; grid-template-columns:38px auto; gap:12px; align-items:start; padding:13px 0; border-bottom:1px solid var(--line); }
+    .action-list li:last-child { border-bottom:0; }
+    .action-list li::before { content:counter(steps); display:grid; place-items:center; width:30px; height:30px; border-radius:50%; background:#32b6e5; color:#102033; font-weight:800; }
+    .action-list strong { color:var(--ink); }
+    .action-list p { margin:2px 0 0; color:var(--muted); font-size:13px; }
+    .output-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .output-grid .info-tile { background:#172b43; }
+    .limits-grid .info-tile { min-height:118px; }
+    .prompt { margin:10px 0 0; padding:13px 15px; border-left:3px solid var(--cyan); border-radius:0 10px 10px 0; background:#18334a; color:#e1edf8; font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:13px; }
+    .note { padding:14px 16px; border-left:3px solid var(--gold); border-radius:0 10px 10px 0; background:#2b261b; color:#e4d3a9; font-size:13px; }
+    @media (max-width:620px) {
+      .tool-grid,.output-grid,.limits-grid { grid-template-columns:1fr; }
+      .input-table th,.input-table td { padding:9px 6px; font-size:12px; }
+      .info-section { padding:22px 16px; }
+    }
+    @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+  </style>
+</head>
+<body>
+  <header class="wrap topbar">
+    <div class="brand"><span>Thư ký Kim-KimochiYY<small>Lark learning assistant</small></span></div>
+    <div class="top-note">A simple guide to how the agent works</div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <span class="eyebrow"><span class="pulse" aria-hidden="true"></span> YOUR LARK AGENT</span>
+        <h1 id="page-title">From a chat message to <span class="gradient">useful help.</span></h1>
+        <p class="lead">The agent checks access, understands what you need, then follows the right path—IELTS practice, a quick answer, or an image summary.</p>
+      </div>
+    </section>
+
+    <section class="workflow" aria-labelledby="workflow-title">
+      <div class="workflow-title"><h2 id="workflow-title">Lark agent workflow chart</h2><span>Based on your conversation screenshots</span></div>
+      <div class="flow">
+        <svg class="chart" viewBox="0 0 1120 1040" role="img" aria-labelledby="chart-title chart-description">
+          <title id="chart-title">Thư ký Kim-KimochiYY Lark agent workflow</title>
+          <desc id="chart-description">A flowchart showing first-time pairing, then routes for IELTS practice, general questions, and image summaries.</desc>
+          <defs>
+            <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L8,4.5 L0,9 Z" fill="#71819a" /></marker>
+          </defs>
+          <g aria-hidden="true">
+            <path class="edge" d="M560 70 V96" />
+            <path class="edge" d="M560 156 V182" />
+            <path class="edge" d="M560 254 V274" />
+            <path class="edge" d="M430 330 H286" />
+            <path class="edge" d="M560 386 V430" />
+            <path class="loop-edge" d="M145 294 V126 H450" />
+            <path class="edge" d="M560 500 V548 H200 V576" />
+            <path class="edge" d="M560 500 V576" />
+            <path class="edge" d="M560 548 H920 V576" />
+            <path class="edge" d="M200 634 V674" />
+            <path class="edge" d="M200 744 V782" />
+            <path class="edge" d="M200 846 V880" />
+            <path class="loop-edge" d="M70 916 H28 V709 H70" />
+            <path class="edge" d="M560 634 V680" />
+            <path class="edge" d="M560 744 V790" />
+            <path class="edge" d="M920 634 V680" />
+            <path class="edge" d="M920 744 V790" />
+            <text class="edge-label" x="354" y="316">No</text>
+            <text class="edge-label" x="575" y="414">Yes</text>
+            <text class="edge-label" x="96" y="866">Next question</text>
+            <rect class="box box-start" x="490" y="20" width="140" height="50" rx="14" />
+            <text class="txt-white" x="560" y="51">START</text>
+            <rect class="box" x="450" y="96" width="220" height="60" rx="14" />
+            <text class="txt" x="560" y="122">Open Lark chat</text><text class="txt-small" x="560" y="142">Send a message</text>
+            <rect class="box box-main" x="410" y="182" width="300" height="72" rx="14" />
+            <text class="txt" x="560" y="213">Send a message in Lark</text><text class="txt-small" x="560" y="236">Say hello or describe what you need</text>
+            <polygon class="diamond" points="560,274 690,330 560,386 430,330" />
+            <text class="txt" x="560" y="326">Recognized by</text><text class="txt" x="560" y="347">the agent?</text>
+            <rect class="box" x="36" y="294" width="250" height="72" rx="14" />
+            <text class="txt" x="161" y="324">Owner approves pairing</text><text class="txt-small" x="161" y="347">Then send the message again</text>
+            <rect class="box box-main" x="410" y="430" width="300" height="70" rx="14" />
+            <text class="txt" x="560" y="461">Choose a task</text><text class="txt-small" x="560" y="484">The agent follows the matching path</text>
+            <rect class="box box-main" x="70" y="576" width="260" height="58" rx="12" />
+            <text class="txt" x="200" y="601">IELTS practice</text><text class="txt-small" x="200" y="621">Academic · General · One skill</text>
+            <rect class="box" x="70" y="674" width="260" height="70" rx="12" />
+            <text class="txt" x="200" y="703">Ask a practice question</text><text class="txt-small" x="200" y="726">The screenshots show Speaking</text>
+            <rect class="box" x="70" y="782" width="260" height="64" rx="12" />
+            <text class="txt" x="200" y="820">User answers</text>
+            <rect class="box box-leaf" x="70" y="880" width="260" height="72" rx="12" />
+            <text class="txt" x="200" y="909">Feedback + estimated band</text><text class="txt-small" x="200" y="932">Continue with the next question</text>
+            <rect class="box" x="430" y="576" width="260" height="58" rx="12" />
+            <text class="txt" x="560" y="601">General question</text><text class="txt-small" x="560" y="621">Ask about a topic</text>
+            <rect class="box box-leaf" x="430" y="680" width="260" height="64" rx="12" />
+            <text class="txt" x="560" y="718">Agent answers</text>
+            <rect class="box box-start" x="495" y="790" width="130" height="52" rx="15" />
+            <text class="txt-white" x="560" y="822">DONE</text>
+            <rect class="box" x="790" y="576" width="260" height="58" rx="12" />
+            <text class="txt" x="920" y="601">Image summary</text><text class="txt-small" x="920" y="621">User shares an image</text>
+            <rect class="box" x="790" y="680" width="260" height="64" rx="12" />
+            <text class="txt" x="920" y="718">Read visible details</text>
+            <rect class="box box-image" x="790" y="790" width="260" height="64" rx="12" />
+            <text class="txt" x="920" y="828">Agent summarizes it</text>
+          </g>
+        </svg>
+        <div class="mobile-flow" aria-label="Agent workflow paths">
+          <article class="mobile-path"><h3>Access</h3><p>Open the Lark chat and send a message. If you are not recognized, the owner approves pairing; then send the message again.</p></article>
+          <article class="mobile-path"><h3>IELTS practice</h3><p>Choose Academic, General Training, or one skill → answer practice questions → receive feedback and an estimated band → continue to the next question.</p></article>
+          <article class="mobile-path"><h3>General question</h3><p>Ask a question → the agent answers.</p></article>
+          <article class="mobile-path"><h3>Image summary</h3><p>Share an image → the agent reads the visible details and summarizes it.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="info-section" aria-labelledby="tools-title">
+      <h2 id="tools-title">Tools behind the assistant</h2>
+      <div class="tool-grid">
+        <article class="info-tile"><strong>Hermes Agent</strong><p>Runs the agent, manages the conversation, and routes each request to the right task.</p></article>
+        <article class="info-tile"><strong>Lark Bot</strong><p>Receives chat messages and shared images, then delivers the agent’s replies in Lark.</p></article>
+        <article class="info-tile"><strong>AI language model</strong><p>Understands study questions and generates explanations, IELTS prompts, and follow-up responses.</p></article>
+        <article class="info-tile"><strong>Image understanding</strong><p>Reads visible content in an image or screenshot the user shares in the chat.</p></article>
+      </div>
+    </section>
+
+    <section class="info-section" aria-labelledby="inputs-title">
+      <h2 id="inputs-title">What the user provides</h2>
+      <table class="input-table">
+        <thead><tr><th scope="col">Input</th><th scope="col">Used for</th><th scope="col">Format</th></tr></thead>
+        <tbody>
+          <tr><td>Lark message</td><td>Request a task or ask a question</td><td>Text</td></tr>
+          <tr><td>IELTS preference</td><td>Choose Academic, General Training, or one skill</td><td>Text or option number</td></tr>
+          <tr><td>Practice response</td><td>Continue an IELTS practice conversation</td><td>Text</td></tr>
+          <tr><td>Shared screenshot</td><td>Request a summary of visible content</td><td>Image</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="info-section" aria-labelledby="actions-title">
+      <h2 id="actions-title">How the assistant processes a request</h2>
+      <ol class="action-list">
+        <li><div><strong>Identify the task.</strong><p>Route the message to IELTS practice, a general question, or an image summary.</p></div></li>
+        <li><div><strong>Set up IELTS practice.</strong><p>Ask for Academic, General Training, or one skill; the conversation shown proceeds with Speaking.</p></div></li>
+        <li><div><strong>Ask a practice question.</strong><p>Start with a prompt such as the Part 1 hometown question shown in the chat.</p></div></li>
+        <li><div><strong>Respond to other requests.</strong><p>Explain a concept with an example, or summarize the visible details in a shared image.</p></div></li>
+        <li><div><strong>Continue the practice loop.</strong><p>After the user answers, provide feedback and an estimated band, then offer the next question.</p></div></li>
+      </ol>
+    </section>
+
+    <section class="info-section" aria-labelledby="outputs-title">
+      <h2 id="outputs-title">What the assistant returns</h2>
+      <div class="output-grid">
+        <article class="info-tile"><strong>IELTS practice</strong><p>Practice prompts, followed by feedback and an indicative band estimate after an answer.</p></article>
+        <article class="info-tile"><strong>Learning support</strong><p>Clear explanations and examples, such as the opportunity-cost explanation in the chat.</p></article>
+        <article class="info-tile"><strong>Image summary</strong><p>A concise description of the visible information in a user-shared screenshot.</p></article>
+        <article class="info-tile"><strong>Conversation follow-up</strong><p>A next question or response that keeps the current task moving.</p></article>
+      </div>
+    </section>
+
+    <section class="info-section" aria-labelledby="scope-title">
+      <h2 id="scope-title">What it can help with—and what needs your input</h2>
+      <div class="limits-grid">
+        <article class="info-tile"><strong>It can help with</strong><p>IELTS prompts, explanations of study topics, and summaries of images shared in the Lark chat.</p></article>
+        <article class="info-tile"><strong>Your input is needed</strong><p>Choose the IELTS format, answer practice questions, and complete first-time bot pairing if requested.</p></article>
+        <article class="info-tile"><strong>Band estimates need an answer</strong><p>The agent offered to estimate a Speaking band, but the screenshots do not show a completed answer or score yet.</p></article>
+        <article class="info-tile"><strong>Image summaries depend on clarity</strong><p>Small, blurry, or cropped details may not be readable; check important information yourself.</p></article>
+      </div>
+    </section>
+
+    <section class="info-section" aria-labelledby="use-title">
+      <h2 id="use-title">How to start</h2>
+      <p>Open the private Lark chat with <strong>Thư ký Kim-KimochiYY</strong> and send a direct request, for example:</p>
+      <div class="prompt">Start an IELTS Speaking Part 1 practice.</div>
+      <div class="prompt">Explain opportunity cost with a simple example.</div>
+      <div class="prompt">Summarize this screenshot.</div>
+    </section>
+
+  </main>
+  <footer class="wrap footer">A visual summary of the Thư ký Kim-KimochiYY Lark agent conversation</footer>
+</body>
+</html>
+
+
+
